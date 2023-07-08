@@ -1,4 +1,5 @@
 const express = require("express");
+const authenticate = require("../../middlewares/auth");
 
 const {
   getAllContacts,
@@ -11,16 +12,16 @@ const {
 
 const router = express.Router();
 
-router.get("/", getAllContacts);
+router.get("/", authenticate, getAllContacts);
 
-router.get("/:contactId", getContactById);
+router.get("/:contactId", authenticate, getContactById);
 
-router.post("/", addNewContact);
+router.post("/", authenticate, addNewContact);
 
-router.put("/:contactId", updateContactById);
+router.put("/:contactId", authenticate, updateContactById);
 
-router.patch("/:contactId/favorite", updateFavoriteById);
+router.patch("/:contactId/favorite", authenticate, updateFavoriteById);
 
-router.delete("/:contactId", deleteContactById);
+router.delete("/:contactId", authenticate, deleteContactById);
 
 module.exports = router;
