@@ -40,11 +40,12 @@ const addNewContact = async (req, res, next) => {
     const { error } = generalSchemaValidation.validate(req.body);
 
     if (error) {
-      throw HttpError(400, "Missing required name field");
+      throw HttpError(400, "Missing valid name field");
     }
 
+    const avatarURL = path.join("public", "avatars", originalname);
     const { _id: owner } = req.user;
-    const result = await Contact.create({ ...req.body, owner });
+    const result = await Contact.create({ ...req.body, owner, avatarURL });
     res.status(201).json(result);
   } catch (error) {
     next(error);

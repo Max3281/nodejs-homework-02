@@ -1,4 +1,5 @@
 const User = require("../models/users");
+const gravatar = require("gravatar");
 
 const {
   registerSchemaValid,
@@ -27,10 +28,13 @@ const registerUser = async (req, res, next) => {
     }
 
     const passHash = await bcrypt.hash(password, 10);
+    const grav = `${gravatar.url(email)}` + "?s=250";
+    const avatarURL = grav;
 
     const newUser = await User.create({
       ...req.body,
       password: passHash,
+      avatarURL,
     });
 
     res.status(201);
