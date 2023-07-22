@@ -24,6 +24,14 @@ const usersSchema = new Schema({
     type: String,
     required: true,
   },
+  verify: {
+    type: Boolean,
+    default: false,
+  },
+  verificationToken: {
+    type: String,
+    required: [true, "Verify token is required"],
+  },
 });
 
 usersSchema.post("save", handleMongooseError);
